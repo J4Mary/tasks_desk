@@ -1,0 +1,14 @@
+{% extends 'cards/base.html' %}
+
+
+{% block title %}Add cards{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button>Save</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'cards/base.html' %}
+
+
+{% block title %}Delete the card{% endblock %}
+
+{% block content %}
+    <form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object.text }}" card?</p>
+    <input type="submit" value="Confirm">
+</form>
+    </div>
+{% endblock %}

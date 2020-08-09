@@ -1,0 +1,18 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}New users{% endblock %}
+
+{% block content%}
+    <div>
+        {% for user in user_list %}
+            {% if user.active == False %}
+                <h6>User: {{ user.email }} </h6>
+           <td><form action="" method="post">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <input class="btn btn-outline-success" type="submit" name="action" value="approve">
+                  {% csrf_token %}
+            </form></td>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
