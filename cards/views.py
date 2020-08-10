@@ -70,7 +70,7 @@ class CardViewSet(viewsets.ModelViewSet):
     serializer_class = CardSerializer
 
     def get_queryset(self):
-        status = self.request.GET.get('category', None)
+        status = self.request.GET.get('status', None)
         if status:
             return Card.objects.all().filter(status=status)
         else:
