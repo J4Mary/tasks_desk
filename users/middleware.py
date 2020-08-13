@@ -1,8 +1,11 @@
 from time import time
-from django.contrib.auth import logout
-from requests import session
 
-from helpdesk.settings import SESSION_TIMEOUT
+from django.contrib import messages
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+# from requests import session
+
+from django.conf import settings
 
 
 class LogoutUser:
@@ -14,8 +17,10 @@ class LogoutUser:
         now = time()
         idle = now - last_activity if last_activity else 0
 
-        if idle > SESSION_TIMEOUT:
-            logout(session)
+        if idle > settings.SESSION_TIMEOUT:
+            logout(request)
+            messages.success(request, "You did nothing for so long! Please, sign in again")
+            return redirect('/')
         else:
             request.session['last_activity'] = now
             response = self.get_response(request)

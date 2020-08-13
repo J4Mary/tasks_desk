@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from cards.views import CardViewSet, UserViewSet
+from cards.views import CardViewSet, UserViewSet, ObtainTokenView
 
 router = routers.DefaultRouter()
 router.register(r'cards', CardViewSet)
@@ -26,6 +26,7 @@ router.register(r'users', UserViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('obtain_token/', ObtainTokenView.as_view()),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('', include('cards.urls')),

@@ -8,12 +8,18 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/d174058948.js" crossorigin="anonymous"></script>
     <style>
         .hr {
 
         }
     </style>
     <title>Tasks | {% block title %}HOME{% endblock %}</title>
+    <style>
+   body {
+    background: #E0FFFF url(/fon.jpg); /* Цвет фона и путь к файлу */
+   }
+  </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -54,15 +60,28 @@
         {% endif %}
     </div>
 </nav>
+<style>
+   h3 {
+    text-align: center;
+    border: 1px solid red;
+    padding: 10px;
+    background: red;
+   }
+  </style>
 {% if messages %}
-    <ul class="messages">
     {% for message in messages %}
-        <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}
+        <h3>{% if message.tags %} {% endif %}
             {{ message }}
-        </li>
+        </h3>
     {% endfor %}
-    </ul>
 {% endif %}
+<style>
+   h6 {
+    border: 4px solid #708090;
+    padding: 10px;
+    background: ;
+   }
+  </style>
 {% block content %}
   {% if user.is_authenticated %}
     {% if not user.is_superuser %}
@@ -70,7 +89,7 @@
    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">Tasks List</h1>
       <p class="lead">Add your tasks here</p>
-      <a href="{% url 'new_card' %}" class="btn btn-success">NEW</a>
+      <a href="{% url 'new_card' %}" class="btn btn-success btn-lg">NEW</a>
 
     </div>
 
@@ -80,25 +99,22 @@
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">New</h4>
           </div>
+
           <div class="card-body">
-            {% for card in card_list.all %}
+            {% for card in card_list %}
               {% if user == card.assigned_to %}
               {% if card.status == 1 %}
-              <h6> {{ card.text }}
-               <a href="{% url 'card_edit' card.id %}" class="btn btn-info">EDIT</a>
+              <h6> {{ card.text }} <br>
+               <a href="{% url 'card_edit' card.id %}" class="btn btn-outline-info btn-sm">EDIT</a>
               <form action="" method="post">
-                        {% csrf_token %}
+                        {% csrf_token %} <br>
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-success" type="submit" name='action' value="next">
+                        <input class=" btn btn-block btn-success btn-sm" type="submit" name='action' value="next">
 
                 </form>
                   </h6>
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
               {% endif %}
-              {% endif %}
-        {% empty %}
-            No cards
         {% endfor %}
           </div>
         </div>
@@ -115,27 +131,24 @@
                    <form action="" method="post">
                         {% csrf_token %}
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-danger" type="submit" name='action' value="back">
+                        <input class="btn btn-block btn-danger btn-sm" type="submit" name='action' value="back">
 
                 </form>
-                  {{ card.text }}
-                  <a href="{% url 'card_edit' card.id %}" class="btn btn-info">EDIT</a>
-              <form action="" method="post">
+                  <br>{{ card.text }} <br>
+                  <a href="{% url 'card_edit' card.id %}" class="btn btn-outline-info btn-sm">EDIT</a>
+              <form action="" method="post"> <br>
                         {% csrf_token %}
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-success" type="submit" name='action' value="next">
+                        <input class="btn btn-block btn-success btn-sm" type="submit" name='action' value="next">
 
                 </form>
                   </h6>
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
-              {% endif %} {% endif %}
-        {% empty %}
-            No cards
-
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
+              {% endif %}
         {% endfor %}
           </div>
         </div>
+
                 <div class="card mb-4 box-shadow">
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">In QA</h4>
@@ -148,23 +161,20 @@
                    <form action="" method="post">
                         {% csrf_token %}
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-danger" type="submit" name='action' value="back">
+                        <input class="btn btn-block btn-danger btn-sm" type="submit" name='action' value="back">
 
                 </form>
-                  {{ card.text }}
-                  <a href="{% url 'card_edit' card.id %}" class="btn btn-info">EDIT</a>
+                  <br>{{ card.text }} <br>
+                  <a href="{% url 'card_edit' card.id %}" class="btn btn-outline-info btn-sm">EDIT</a>
               <form action="" method="post">
-                        {% csrf_token %}
+                        {% csrf_token %}<br>
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-success" type="submit" name='action' value="next">
+                        <input class="btn btn-block btn-success btn-sm" type="submit" name='action' value="next">
 
                 </form>
                   </h6>
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
-              {% endif %} {% endif %}
-        {% empty %}
-            No cards
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
+              {% endif %}
         {% endfor %}
           </div>
         </div>
@@ -180,16 +190,13 @@
                    <form action="" method="post">
                         {% csrf_token %}
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-danger" type="submit" name='action' value="back">
+                        <input class="btn btn-block btn-danger btn-sm" type="submit" name='action' value="back">
 
                 </form>
-                  {{ card.text }}
+                  <br>{{ card.text }} <br>
                   </h6>
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
-              {% endif %} {% endif %}
-        {% empty %}
-            No cards
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
+              {% endif %}
         {% endfor %}
           </div>
         </div>
@@ -205,17 +212,14 @@
                    <form action="" method="post">
                         {% csrf_token %}
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-danger" type="submit" name='action' value="back">
+                        <input class="btn btn-block btn-danger btn-sm" type="submit" name='action' value="back">
 
                 </form>
-                  {{ card.text }}
+                  <br>{{ card.text }} <br>
                   </h6>
 
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
-              {% endif %} {% endif %}
-        {% empty %}
-            No cards
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
+              {% endif %}
         {% endfor %}
           </div>
         </div>
@@ -245,21 +249,17 @@
           <div class="card-body">
             {% for card in card_list.all %}
               {% if card.status == 1 %}
-              <h6> {{ card.text }}
-               <a href="{% url 'card_edit' card.id %}" class="btn btn-info">EDIT</a>
-               <a href="{% url 'card_delete' card.id %}" class="btn btn-danger">DELETE</a>
+              <h6> {{ card.assigned_to }}: {{ card.text }} <br>
+               <a href="{% url 'card_edit' card.id %}" class="btn btn-outline-info btn-sm">EDIT</a>
+               <a href="{% url 'card_delete' card.id %}" class="btn btn-outline-danger btn-sm">DELETE</a>
               <form action="" method="post">
-                        {% csrf_token %}
+                        {% csrf_token %}<br>
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-success" type="submit" name='action' value="next">
+                        <input class="btn btn-block btn-success btn-sm" type="submit" name='action' value="next">
 
                 </form>
                   </h6>
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
-              {% endif %}
-        {% empty %}
-            No cards
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
         {% endfor %}
           </div>
         </div>
@@ -275,26 +275,21 @@
                    <form action="" method="post">
                         {% csrf_token %}
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-danger" type="submit" name='action' value="back">
+                        <input class="btn btn-block btn-warning btn-sm" type="submit" name='action' value="back">
 
                 </form>
-                  {{ card.text }}
-                  <a href="{% url 'card_edit' card.id %}" class="btn btn-info">EDIT</a>
-                  <a href="{% url 'card_delete' card.id %}" class="btn btn-danger">DELETE</a>
+                  <br>{{ card.assigned_to }}: {{ card.text }} <br>
+                  <a href="{% url 'card_edit' card.id %}" class="btn btn-outline-info btn-sm">EDIT</a>
+                  <a href="{% url 'card_delete' card.id %}" class="btn btn-outline-danger btn-sm">DELETE</a>
               <form action="" method="post">
-                        {% csrf_token %}
+                        {% csrf_token %}<br>
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-success" type="submit" name='action' value="next">
+                        <input class="btn btn-block btn-success btn-sm" type="submit" name='action' value="next">
 
                 </form>
                   </h6>
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
-              {% endif %}
-        {% empty %}
-            No cards
-
-        {% endfor %}
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
+              {% endfor %}
           </div>
         </div>
                 <div class="card mb-4 box-shadow">
@@ -308,24 +303,20 @@
                    <form action="" method="post">
                         {% csrf_token %}
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-danger" type="submit" name='action' value="back">
+                        <input class="btn btn-block btn-warning btn-sm" type="submit" name='action' value="back">
 
                 </form>
-                  {{ card.text }}
-                  <a href="{% url 'card_edit' card.id %}" class="btn btn-info">EDIT</a>
-                  <a href="{% url 'card_delete' card.id %}" class="btn btn-danger">DELETE</a>
+                  <br>{{ card.assigned_to }}: {{ card.text }} <br>
+                  <a href="{% url 'card_edit' card.id %}" class="btn btn-outline-info btn-sm">EDIT</a>
+                  <a href="{% url 'card_delete' card.id %}" class="btn btn-outline-danger btn-sm">DELETE</a>
               <form action="" method="post">
-                        {% csrf_token %}
+                        {% csrf_token %}<br>
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-success" type="submit" name='action' value="next">
+                        <input class="btn btn-block btn-success btn-sm" type="submit" name='action' value="next">
 
                 </form>
                   </h6>
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
-              {% endif %}
-        {% empty %}
-            No cards
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
         {% endfor %}
           </div>
         </div>
@@ -341,24 +332,20 @@
                    <form action="" method="post">
                         {% csrf_token %}
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-danger" type="submit" name='action' value="back">
+                        <input class="btn btn-block btn-warning btn-sm" type="submit" name='action' value="back">
 
                 </form>
-                  {{ card.text }}
-                  <a href="{% url 'card_edit' card.id %}" class="btn btn-info">EDIT</a>
-                  <a href="{% url 'card_delete' card.id %}" class="btn btn-danger">DELETE</a>
+                  <br>{{ card.assigned_to }}: {{ card.text }} <br>
+                  <a href="{% url 'card_edit' card.id %}" class="btn btn-outline-info btn-sm">EDIT</a>
+                  <a href="{% url 'card_delete' card.id %}" class="btn btn-outline-danger btn-sm">DELETE</a>
               <form action="" method="post">
-                        {% csrf_token %}
+                        {% csrf_token %}<br>
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-success" type="submit" name='action' value="next">
+                        <input class="btn btn-block btn-success btn-sm" type="submit" name='action' value="next">
 
                 </form>
                   </h6>
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
-              {% endif %}
-        {% empty %}
-            No cards
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
         {% endfor %}
           </div>
         </div>
@@ -374,18 +361,14 @@
                    <form action="" method="post">
                         {% csrf_token %}
                         <input type='hidden' name='card_id' value='{{ card.id }}'>
-                        <input class="btn btn-block btn-outline-danger" type="submit" name='action' value="back">
+                        <input class="btn btn-block btn-warning btn-sm" type="submit" name='action' value="back">
 
                 </form>
-                  {{ card.text }}
-                     <a href="{% url 'card_edit' card.id %}" class="btn btn-info">EDIT</a>
-                     <a href="{% url 'card_delete' card.id %}" class="btn btn-danger">DELETE</a>
+                  <br>{{ card.assigned_to }}: {{ card.text }} <br>
+                     <a href="{% url 'card_edit' card.id %}" class="btn btn-outline-info btn-sm">EDIT</a>
+                     <a href="{% url 'card_delete' card.id %}" class="btn btn-outline-danger btn-sm">DELETE</a>
                   </h6>
-            {% if not forloop.last %}
-                <hr style="border-top: 1px solid rgb(66,66,66)"/>{% endif %}
-              {% endif %}
-        {% empty %}
-            No cards
+                <hr style="border-top: 4px solid #708090"/>{% endif %}
         {% endfor %}
           </div>
         </div>

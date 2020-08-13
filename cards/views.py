@@ -1,12 +1,17 @@
-from django.http import HttpResponseRedirect, request
+from django.contrib.auth import authenticate
+from django.http import HttpResponseRedirect, HttpResponse
 
-# Create your views here.
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from rest_framework import viewsets
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from cards import models, forms
 from cards.models import Card
+from cards.permissions import CreatedByAccessPermission
 from cards.serializers import CardSerializer, UserSerializer
 from users.models import User
 
@@ -14,6 +19,21 @@ from users.models import User
 class Homepage(ListView):
     model = models.Card
     template_name = 'cards/base.html'
+
+    def get_context_data(self, **kwargs):
+
+        context = super(Homepage, self).get_context_data(**kwargs)
+        new_cards = models.Card.objects.filter(status=1)
+        in_progress_cards = models.Card.objects.filter(status=2)
+        in_qa_cards = models.Card.objects.filter(status=3)
+        ready_cards = models.Card.objects.filter(status=4)
+        done_cards = models.Card.objects.filter(status=5)
+        context.update(dict(new_cards=new_cards,
+                            in_progress_cards=in_progress_cards,
+                            in_qa_cards=in_qa_cards,
+                            ready_cards=ready_cards,
+                            done_cards=done_cards))
+        return context
 
     def post(self, request, *args, **kwargs):
         card_id = request.POST.get('card_id', '')
@@ -68,6 +88,10 @@ class CardDelete(DeleteView):
 class CardViewSet(viewsets.ModelViewSet):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
+    permission_classes = [CreatedByAccessPermission]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
     def get_queryset(self):
         status = self.request.GET.get('status', None)
@@ -80,3 +104,17 @@ class CardViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class ObtainTokenView(APIView):
+    http_method_names = ['post']
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        user = authenticate(request,
+                            email=self.request.data.get('email'),
+                            password=self.request.data.get('password'))
+        if user is not None:
+            return Response(str(Token.objects.get(user=user)), 200)
+        else:
+            return HttpResponse(status=401)
