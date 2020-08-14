@@ -34,5 +34,3 @@ class Card(TimeStampModel):
     created_by = models.ForeignKey(USER_MODEL, on_delete=models.CASCADE, related_name='creator')
     assigned_to = models.ForeignKey(USER_MODEL, on_delete=models.CASCADE, related_name='executor')
 
-    def __str__(self):
-        return f"'{self.text} created by {self.created_by}"

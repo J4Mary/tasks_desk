@@ -144,3 +144,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]

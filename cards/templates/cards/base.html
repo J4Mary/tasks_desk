@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,7 +18,7 @@
     <title>Tasks | {% block title %}HOME{% endblock %}</title>
     <style>
    body {
-    background: #E0FFFF url(/media/fon.jpg); /* Цвет фона и путь к файлу */
+    background: #E0FFFF url({% static 'images/fon.jpg' %});
    }
   </style>
 </head>
@@ -63,8 +64,8 @@
 <style>
    h3 {
     text-align: center;
-    border: 1px solid red;
-    padding: 10px;
+    border: 1px solid white;
+    padding: 30px;
     background: red;
    }
   </style>
