@@ -236,7 +236,7 @@
    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">Tasks List</h1>
       <p class="lead">Add your tasks here</p>
-      <a href="{% url 'new_card' %}" class="btn btn-success">NEW</a>
+      <a href="{% url 'new_card' %}" class="btn btn-success btn-lg">NEW</a>
 
     </div>
 
@@ -356,7 +356,7 @@
           </div>
           <div class="card-body">
             {% for card in card_list.all %}
-              {% if user == card.assigned_to %}
+              {% if card.status == 5 %}
               <h6>
                    <form action="" method="post">
                         {% csrf_token %}

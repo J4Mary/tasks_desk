@@ -3,10 +3,10 @@
 {% block title %}New users{% endblock %}
 
 {% block content%}
-    <div>
+    <div class="container">
         {% for user in user_list %}
             {% if user.active == False %}
-                <h5>User {{ user.id }}: {{ user.username }} with email {{ user.email }} </h5>
+                <h5><br>User {{ user.id }}: {{ user.username }} with email {{ user.email }} </h5>
            <td><form action="" method="post">
             <input type="hidden" name="user_id" value="{{user.id}}">
             <input class="btn btn-success" type="submit" name="action" value="approve">
